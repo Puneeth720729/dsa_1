@@ -1,0 +1,76 @@
+import java.util.Scanner;
+
+class Solution {
+    static node head1 = null;  
+    static node head2 = null;  
+    static class node {
+        int data;
+        node next;
+        node prev;
+        
+        node(int n) {
+            data = n;
+            prev = null;
+            next = null;
+        }
+    }
+    static void insert(int n, boolean isFirstList) {
+        node newnode = new node(n);
+        node head = isFirstList ? head1 : head2;
+        
+        if (head == null) {
+            if (isFirstList) head1 = newnode;
+            else head2 = newnode;
+        } else {
+            node cur = head;
+            while (cur.next != null) {
+                cur = cur.next;
+            }
+            cur.next = newnode;
+            newnode.prev = cur;
+        }
+    }
+    static void display(node head) {
+        node cur = head;
+        while (cur != null) {
+            System.out.print(cur.data + "->");
+            cur = cur.next;
+        }
+        System.out.print("NULL");
+    }
+     static node merge(node head1, node head2) {
+        if (head1 == null) return head2;
+        if (head2 == null) return head1;
+         if (head1.data <= head2.data) {
+            head1.next = merge(head1.next, head2);
+            if (head1.next != null) {
+                head1.next.prev = head1;
+            }
+            head1.prev = null;
+            return head1;
+        } else {
+            head2.next = merge(head1, head2.next);
+            if (head2.next != null) {
+                head2.next.prev = head2;
+            }
+            head2.prev = null;
+            return head2;
+        }
+    }
+    
+    public static void main(String ar[]) {
+        Scanner sw = new Scanner(System.in);
+        int n1 = sw.nextInt();
+        for (int i = 0; i < n1; i++) {
+            int data = sw.nextInt();
+            insert(data, true);
+        }
+         int n2 = sw.nextInt();
+        for (int i = 0; i < n2; i++) {
+            int data = sw.nextInt();
+            insert(data, false);
+        }
+        node mergedList = merge(head1, head2);
+        display(mergedList);
+    }
+}
