@@ -1,0 +1,48 @@
+import java.util.*;
+public class Solution{
+    static void bfs(ArrayList<ArrayList<Integer>> list ,int v){
+        Queue<Integer> q = new LinkedList<>();
+        boolean[] visited = new boolean[v];
+        
+        for(int i=0;i<v;i++){
+            if(!visited[i]){
+                q.add(i);
+                visited[i]=true;
+                while(!q.isEmpty()){
+            int curr = q.poll();
+            System.out.print(curr+" ");
+            for(int adj:list.get(curr)){
+                if(!visited[adj]){
+                    visited[adj]=true;
+                    q.add(adj);
+                }
+            }
+        }
+            }
+        }
+    }
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int v =sc.nextInt();
+        if(v==0){
+            System.out.print("Graph doesn't exist");
+            return;
+        }
+        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+        for(int i=0;i<v;i++){
+            list.add(new ArrayList<>());
+        }
+       while(true){
+           int src = sc.nextInt();
+           int dest = sc.nextInt();
+           if(src!=-1&&dest!=-1){
+               list.get(src).add(dest);
+               list.get(dest).add(src);
+           }else{
+               break;
+           }
+       }
+        System.out.print("BFS : ");
+       bfs(list,v); 
+    }
+}
