@@ -1,0 +1,36 @@
+import java.util.*;
+
+public class Main {
+    static void solve(int[] a, int i, ArrayList<Integer> current, ArrayList<ArrayList<Integer>> list) {
+        
+        if (i == a.length) {
+            list.add(new ArrayList<>(current)); 
+            return;
+        }
+
+      
+        current.add(a[i]);
+        solve(a, i + 1, current, list);
+
+        
+        current.remove(current.size() - 1);
+
+       
+        solve(a, i + 1, current, list);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] a = new int[n];
+        for (int i = 0; i < n; i++) a[i] = sc.nextInt();
+
+        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+        solve(a, 0, new ArrayList<>(), list);
+
+       
+        for (ArrayList<Integer> subset : list) {
+            System.out.println(subset);
+        }
+    }
+}
