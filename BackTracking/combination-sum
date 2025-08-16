@@ -1,0 +1,30 @@
+class Solution {
+    static void helper(int[] candidates,int target,int n,List<List<Integer>> list,int sum,int i,List<Integer> temp){
+        if(sum==target){
+            list.add(new ArrayList<>(temp));
+            return;
+        }
+        if(sum>target){
+            return;
+        }
+        if(i==n){
+            return;
+        }
+        temp.add(candidates[i]);
+        helper(candidates,target,n,list,sum+candidates[i],i,temp);
+        temp.remove(temp.size()-1);
+         helper(candidates,target,n,list,sum,i+1,temp);
+
+
+    }
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> list = new ArrayList<>();
+        if(candidates.length==0){
+            return list;
+        }
+        int n =candidates.length;
+        List<Integer> temp = new ArrayList<>();
+        helper(candidates,target,n,list,0,0,temp);
+        return list;
+    }
+}
