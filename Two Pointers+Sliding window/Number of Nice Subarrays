@@ -1,0 +1,14 @@
+class Solution {
+    public int numberOfSubarrays(int[] nums, int k) {
+        int n=nums.length;
+        int start=0,sum=0,max=0;
+        HashMap<Integer,Integer> map=new HashMap<>();
+        map.put(0,1);
+        for(int end=0;end<n;end++){
+            if(nums[end]%2!=0) sum+=1;
+            if(map.containsKey(sum-k)) max+=map.get(sum-k);
+            map.put(sum,map.getOrDefault(sum,0)+1);
+        }
+        return max;
+    }
+}
